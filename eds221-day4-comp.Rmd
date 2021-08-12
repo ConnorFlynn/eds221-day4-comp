@@ -1,0 +1,147 @@
+---
+title: "day 4 comp loop and function practice"
+author: "Connor Flynn"
+date: "8/12/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(palmerpenguins)
+library(tidyverse)
+```
+
+```{r}
+quarter_split <- c(1.0, 1.1, 1.2, 1.1, 1.4, 1.5, 1.6, 1.4)
+
+half_splits <- vector(mode = "numeric", length =
+                  length(quarter_split) - 1)
+            
+
+
+for (i in seq_along(quarter_split) - 1) {
+  half_mile <- quarter_split[i] + quarter_split[i + 1]
+  half_splits[i] <- half_mile
+}
+
+
+half_splits
+```
+
+
+##Writing Functions
+
+```{r}
+birddog_sum <- function(bird, dog) {
+  add_birddog <- bird + dog
+  return(add_birddog)
+}
+
+bird100_dog5 <- birddog_sum(bird = 100, dog = 5)
+
+```
+
+
+```{r}
+say_hello <- function(friend, weekday) {
+  print(paste("hello", friend, "have a great", weekday))
+}
+
+say_hello(friend = "Connor", weekday = "Thursday")
+
+```
+
+
+```{r}
+find_multiple <- function(a, b) {
+  my_multiplication <- a * b
+  print(my_multiplication)
+}
+  
+  
+  
+final_value1 <- find_multiple(a = 10, b = 6) 
+  
+```
+
+```{r}
+animal_age <- function(animal, age) {
+  
+  if (!animal %in% c("dog", "goat", "bear")) {
+    warning("animal must be a dog, goat or bear")
+  }
+  
+  if (animal == "dog") {
+    creature_age <- age * 7
+  }
+  else if (animal == "goat") {
+    creature_age <- age * 8
+  }
+  else if (animal == "bear") {
+    creature_age <- age * 12
+  }
+  return(creature_age)
+  }
+
+animal_age(animal = "bear", age = 5)
+
+```
+
+```{r}
+adelie_gentoo <- penguins %>% 
+  filter(species %in% c("Adelie", "Gentoo"))
+
+
+## %in% replaces == because == looks for 
+## does row 1 match Adelie, does row 2 match Gentoo
+## does row 3 match Adelie, does row 4 match Gentoo
+## %in% says does row 1 match Adelie or Gentoo, 
+## does row 2 match Adelie or Gentoo
+
+```
+
+
+```{r}
+### Combine functions and for loops
+
+
+df_means <- function(df) {
+  for (i in 1:ncol(df)) {
+    col_mean <- mean(df[[i]])
+    column_name <- colnames(df[i])
+    print(paste("The mean of", column_name, "is",
+    col_mean))
+  }
+}
+
+
+
+```
+
+
+```{r}
+## Make a subset of only structural size variables from
+## the penguins dataset for Chinstrap
+## filter is for rows, select is for columns
+
+chinstrap_sizes <- penguins %>% 
+  filter(species == "Chinstrap") %>%
+  select(species, bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g)
+
+df_means(df = chinstrap_sizes)
+
+```
+
+```{r}
+## Condition to check class of an input
+
+lunchtime <- function(tacos, price_per) {
+  tot_price <- tacos * price_per
+  return(tot_price)
+}
+
+lunchtime(tacos = 4, price_per = 2)
+
+```
+
+
